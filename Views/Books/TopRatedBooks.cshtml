@@ -1,0 +1,36 @@
+@model IEnumerable<Onlinelibrary.Models.Book>
+
+@{
+    ViewData["Title"] = "Top Rated Books";
+}
+
+<h1>Top Rated Books</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Author</th>
+            <th>Average Rating</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Genre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Author.Name)</td>
+                <td>
+                    @(item.Reviews != null && item.Reviews.Any() ? item.Reviews.Average(r => r.Rating).ToString("0.00") : "No Ratings")
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
